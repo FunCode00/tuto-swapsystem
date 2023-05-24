@@ -44,21 +44,20 @@ To add liquidity to the swap system, users deposit an equal value of both tokens
 ### Swapping Tokens
 Token swaps occur when a user wants to exchange one token for another. The swap system calculates the amount of tokens the user will receive based on the exchange rate determined by the liquidity pool's reserves. The reserves are adjusted accordingly, reflecting the tokens swapped by the user.
 
-The SwapSystem class represents the entire swap system. It contains a collection of tokens and liquidity pools. The SwapSystem class provides functions to interact with tokens and liquidity pools, including adding tokens, adding liquidity pools, checking token balances, calculating prices, adding liquidity, and swapping tokens.
+The SwapToken class represents the entire swap system. It contains a collection of tokens and liquidity pools. The SwapSystem class provides functions to interact with tokens and liquidity pools, including adding tokens, adding liquidity pools, checking token balances, calculating prices, adding liquidity, and swapping tokens.
 
 The key functions provided by the SwapSystem class are:
 
-__addToken(name)__: This function adds a new token to the swap system. It creates a new instance of the Token class with the specified name and adds it to the collection of tokens.
+ * __addToken(name)__: This function adds a new token to the swap system. It creates a new instance of the Token class with the specified name and adds it to the collection of tokens.
 
-__addLiquidityPool(tokenAName, tokenBName, reserveA, reserveB)__: This function creates a new liquidity pool by specifying the names of the two tokens in the pair, as well as the initial reserves for each token. It creates instances of the Token class for the tokens, creates a new instance of the LiquidityPool class with the tokens and reserves, and adds it to the collection of liquidity pools.
+* __addLiquidityPool(tokenAName, tokenBName, reserveA, reserveB)__: This function creates a new liquidity pool by specifying the names of the two tokens in the pair, as well as the initial reserves for each token. It creates instances of the Token class for the tokens, creates a new instance of the LiquidityPool class with the tokens and reserves, and adds it to the collection of liquidity pools.
+* __getTokenBalance(tokenName)__: This function retrieves the balance of a specific token by its name. It looks up the corresponding Token instance and returns the balance.
 
-__getTokenBalance(tokenName)__: This function retrieves the balance of a specific token by its name. It looks up the corresponding Token instance and returns the balance.
+* __calculatePrice(tokenAName, tokenBName)__: This function calculates the price of Token A in terms of Token B in a liquidity pool. It looks up the corresponding liquidity pool, calls the calculatePrice() function on the pool, and returns the price.
 
-__calculatePrice(tokenAName, tokenBName)__: This function calculates the price of Token A in terms of Token B in a liquidity pool. It looks up the corresponding liquidity pool, calls the calculatePrice() function on the pool, and returns the price.
+* __addLiquidity(tokenAName, tokenBName, amountA, amountB)__: This function adds liquidity to a liquidity pool by depositing a specified amount of Token A and Token B. It looks up the corresponding liquidity pool and calls the addLiquidity() function on the pool with the amounts.
 
-__addLiquidity(tokenAName, tokenBName, amountA, amountB)__: This function adds liquidity to a liquidity pool by depositing a specified amount of Token A and Token B. It looks up the corresponding liquidity pool and calls the addLiquidity() function on the pool with the amounts.
-
-__swapTokens(tokenAName, tokenBName, fromTokenName, toTokenName, amount)__: This function performs a token swap between Token A and Token B in a liquidity pool. It looks up the corresponding liquidity pool and tokens, and calls the swapTokens() function on the pool with the tokens and amount.
+* __swapTokens(tokenAName, tokenBName, fromTokenName, toTokenName, amount)__: This function performs a token swap between Token A and Token B in a liquidity pool. It looks up the corresponding liquidity pool and tokens, and calls the swapTokens() function on the pool with the tokens and amount.
 
 ```typescript
 /**
