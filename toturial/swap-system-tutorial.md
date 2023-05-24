@@ -1,12 +1,12 @@
-#Swap System Walkthrough Tutorial
+# Swap System Walkthrough Tutorial
 This walkthrough tutorial explains the inner workings of a swap system similar to Uniswap V1.
 ---
-###Overview
+### Overview
 The swap system is designed to facilitate decentralized token swaps between different tokens. It uses liquidity pools, which are reserves of tokens that users contribute to. The prices of tokens are determined by the ratio of reserves in the pools. When users want to swap tokens, the swap system calculates the appropriate exchange rate based on the pool's reserves.
 
 The key components of the swap system are tokens, liquidity pools, and the functions for adding liquidity and swapping tokens.
 
-###Tokens
+### Tokens
 Tokens represent the different types of assets that can be swapped in the system. Each token has a name and a balance associated with it. The balances reflect the amount of tokens held by different accounts in the system.
 ```typescript
 class Token {
@@ -17,7 +17,7 @@ class Token {
   }
 }
 ```
-###Liquidity Pools
+### Liquidity Pools
 Liquidity pools are created for each token pair that can be swapped. Each pool consists of two tokens and their corresponding reserves. The reserves represent the amount of tokens available in the pool for each token type. The ratio of reserves determines the exchange rate between the tokens.
 ```typescript
 class LiquidityPool {
@@ -26,7 +26,7 @@ class LiquidityPool {
 }
 ```
 
-###Adding Liquidity
+### Adding Liquidity
 To add liquidity to the swap system, users deposit an equal value of both tokens in a liquidity pool. The tokens are added to the reserves, increasing the liquidity of the pool. This process allows users to contribute to the liquidity available for token swaps.
 ```typescript
   /**
@@ -41,8 +41,25 @@ To add liquidity to the swap system, users deposit an equal value of both tokens
     this.reserveB += amountB;
   }
 ```
-###Swapping Tokens
+### Swapping Tokens
 Token swaps occur when a user wants to exchange one token for another. The swap system calculates the amount of tokens the user will receive based on the exchange rate determined by the liquidity pool's reserves. The reserves are adjusted accordingly, reflecting the tokens swapped by the user.
+
+The SwapSystem class represents the entire swap system. It contains a collection of tokens and liquidity pools. The SwapSystem class provides functions to interact with tokens and liquidity pools, including adding tokens, adding liquidity pools, checking token balances, calculating prices, adding liquidity, and swapping tokens.
+
+The key functions provided by the SwapSystem class are:
+
+__addToken(name)__: This function adds a new token to the swap system. It creates a new instance of the Token class with the specified name and adds it to the collection of tokens.
+
+__addLiquidityPool(tokenAName, tokenBName, reserveA, reserveB)__: This function creates a new liquidity pool by specifying the names of the two tokens in the pair, as well as the initial reserves for each token. It creates instances of the Token class for the tokens, creates a new instance of the LiquidityPool class with the tokens and reserves, and adds it to the collection of liquidity pools.
+
+__getTokenBalance(tokenName)__: This function retrieves the balance of a specific token by its name. It looks up the corresponding Token instance and returns the balance.
+
+__calculatePrice(tokenAName, tokenBName)__: This function calculates the price of Token A in terms of Token B in a liquidity pool. It looks up the corresponding liquidity pool, calls the calculatePrice() function on the pool, and returns the price.
+
+__addLiquidity(tokenAName, tokenBName, amountA, amountB)__: This function adds liquidity to a liquidity pool by depositing a specified amount of Token A and Token B. It looks up the corresponding liquidity pool and calls the addLiquidity() function on the pool with the amounts.
+
+__swapTokens(tokenAName, tokenBName, fromTokenName, toTokenName, amount)__: This function performs a token swap between Token A and Token B in a liquidity pool. It looks up the corresponding liquidity pool and tokens, and calls the swapTokens() function on the pool with the tokens and amount.
+
 ```typescript
 /**
  * Swaps tokens between Token A and Token B.
@@ -146,7 +163,7 @@ class SwapToken {
 }
 ```
 
-###Walkthrough
+### Walkthrough
 Let's walk through the steps involved in using the swap system:
 
 1. __Initialize the Swap System__: The swap system is initialized by deploying the smart contract. This sets up the initial state of the system, including the tokens and liquidity pools.
